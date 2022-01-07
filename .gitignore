@@ -1,0 +1,13 @@
+# OS
+**.DS_Store
+
+# IDE
+**.iml
+.idea/
+
+# Scanners
+.scannerwork
+
+# Golang
+c.out
+coverage.html
