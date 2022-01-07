@@ -44,6 +44,7 @@ func NewClient(opts ...ClientOption) *Client {
 		httpClient: resty.New(),
 		Offset:     defaultOffset,
 		Limit:      defaultLimit,
+		CacheSize:  defaultCacheSize,
 	}
 
 	c.Berry = &berriesClient{client: c}
