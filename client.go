@@ -14,8 +14,6 @@ import (
 const (
 	apiURL           = "https://pokeapi.co/api"
 	apiVersion       = "v2"
-	defaultOffset    = 20
-	defaultLimit     = 20
 	defaultCacheSize = 100
 )
 
@@ -29,12 +27,10 @@ type HTTPRequestOption func(interface{})
 type Client struct {
 	httpClient *resty.Client
 	cache      *fastcache.Cache
+	CacheSize  int
 
-	Offset    int
-	Limit     int
-	CacheSize int
-
-	Berry BerriesClient
+	Resource ResourcesClient
+	Berry    BerriesClient
 }
 
 // NewClient configures and returns a new pokeapi client.
@@ -42,11 +38,10 @@ type Client struct {
 func NewClient(opts ...ClientOption) *Client {
 	c := &Client{
 		httpClient: resty.New(),
-		Offset:     defaultOffset,
-		Limit:      defaultLimit,
 		CacheSize:  defaultCacheSize,
 	}
 
+	c.Resource = &resourcesClient{client: c}
 	c.Berry = &berriesClient{client: c}
 
 	for _, opt := range opts {
@@ -72,7 +67,7 @@ func WithCacheSize(cacheSize int) ClientOption {
 	}
 }
 
-// request makes a request to the pokeapi API's to get the data.
+// request makes a request to the pokeapi APIs to get the data.
 // Data is also cached based on the endpoint that is called and if the same endpoint is called again
 // then the data is returned from cache.
 func (c *Client) request(url string, res interface{}) *errors.RestErr {

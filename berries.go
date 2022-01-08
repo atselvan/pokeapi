@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	berryAPIPath         = "/berry"
-	berryFirmnessAPIPath = "/berry-firmness"
-	berryFlavourAPIPath  = "/berry-flavor"
+	berriesResource       = "/berry"
+	berryFirmnessResource = "/berry-firmness"
+	berryFlavoursResource = "/berry-flavor"
 )
 
 // BerriesClient represents the interface that needs to be implemented to perform actions on the berries endpoint.
@@ -103,7 +103,7 @@ func (bc *berriesClient) Get(id ID) (berry *Berry, restErr *errors.RestErr) {
 		return nil, restErr
 	}
 	berry = new(Berry)
-	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berryAPIPath, id.String()), berry); restErr != nil {
+	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berriesResource, id.String()), berry); restErr != nil {
 		return nil, restErr
 	}
 	return berry, restErr
@@ -116,7 +116,7 @@ func (bc *berriesClient) GetFirmness(id ID) (berryFirmness *BerryFirmness, restE
 		return nil, restErr
 	}
 	berryFirmness = new(BerryFirmness)
-	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berryFirmnessAPIPath, id.String()), berryFirmness); restErr != nil {
+	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berryFirmnessResource, id.String()), berryFirmness); restErr != nil {
 		return nil, restErr
 	}
 	return berryFirmness, restErr
@@ -129,7 +129,7 @@ func (bc *berriesClient) GetFlavour(id ID) (berryFlavour *BerryFlavour, restErr 
 		return nil, restErr
 	}
 	berryFlavour = new(BerryFlavour)
-	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berryFlavourAPIPath, id.String()), berryFlavour); restErr != nil {
+	if restErr := bc.client.request(fmt.Sprintf("%s/%s", berryFlavoursResource, id.String()), berryFlavour); restErr != nil {
 		return nil, restErr
 	}
 	return berryFlavour, restErr
