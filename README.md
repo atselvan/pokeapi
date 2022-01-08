@@ -27,8 +27,15 @@ import (
 
 func main() {
 	client := pokeapi.NewClient()
+	
+	// Get all the berry records.
+	result, restErr := client.Resource.Berries()
+	if restErr != nil {
+		// do something
+	}
 
-	berry, restErr := client.Berry.Get("1") // Can also be the name of the berry
+	// Get a single berry record.
+	berry, restErr := client.Berry.Get("1") // Can also be the name of the berry "cheri"
 	if restErr != nil {
 		// do something
 	}
